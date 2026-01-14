@@ -7,174 +7,273 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #0d1117;
-            color: #c9d1d9;
-        }
-        h1 { 
-            text-align: center; 
-            color: #58a6ff; 
-            margin-bottom: 40px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .logo-container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-        .logo {
-            width: 80px;
-            height: auto;
-        }
-        section {
-            background: #161b22;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            border: 1px solid #30363d;
-        }
-        h2 { margin-top: 0; color: #58a6ff; }
-        .input-group { margin: 16px 0; }
-        label { display: block; margin-bottom: 6px; font-weight: 500; color: #8b949e; }
-        input, select {
-            width: 100%;
-            max-width: 320px;
-            padding: 10px 12px;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            font-size: 16px;
+            padding: 20px 15px;
             background: #0d1117;
             color: #c9d1d9;
         }
+        h1 {
+            text-align: center;
+            color: #58a6ff;
+            margin: 20px 0 40px;
+        }
+        section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        h2 { color: #58a6ff; margin-top: 0; }
+        label { color: #8b949e; display: block; margin-bottom: 6px; }
+        input, select {
+            background: #0d1117;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 340px;
+            font-size: 16px;
+        }
         button {
-            padding: 10px 24px;
-            background-color: #238636;
+            background: #238636;
             color: white;
             border: none;
+            padding: 10px 22px;
             border-radius: 6px;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 15px;
         }
-        button:hover { background-color: #2ea043; }
+        button:hover { background: #2ea043; }
         .result {
-            margin-top: 20px;
-            padding: 16px;
-            background-color: #21262d;
-            border-radius: 8px;
-            white-space: pre-line;
-            min-height: 40px;
+            margin-top: 18px;
+            padding: 14px;
+            background: #21262d;
             border: 1px solid #30363d;
+            border-radius: 6px;
+            min-height: 40px;
+            white-space: pre-line;
         }
-        .error { color: #f85149; font-weight: 500; }
-        .note { font-size: 0.9em; color: #8b949e; margin-top: 12px; }
+        .error { color: #f85149; }
+        .note { font-size: 0.85em; color: #8b949e; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="logo-container">
-        <img src="https://i.imgur.com/EXAMPLELOGO.png" alt="Freedom Mobile Logo" class="logo"> <!-- Replace with your actual logo URL if hosted -->
+<h1>Freedom Mobile Agent AID</h1>
+
+<!-- 1. Time Adder -->
+<section>
+    <h2>1. Egyptian Time Adder (12h)</h2>
+    <div class="input-group">
+        <label>Current Time (12h):</label>
+        <input type="text" id="timeInput1" placeholder="e.g. 3:25 PM">
     </div>
+    <div class="input-group">
+        <label>Minutes to add:</label>
+        <input type="number" id="minutesAdd" placeholder="e.g. 90" min="0">
+    </div>
+    <button onclick="addMinutes()">Calculate</button>
+    <div id="result1" class="result"></div>
+</section>
 
-    <h1>Freedom Mobile Agent AID</h1>
+<!-- 2. FIXED Time Converter -->
+<section>
+    <h2>2. Egypt ↔ Toronto (Fixed 7h difference - Winter 2026)</h2>
+    <div class="input-group">
+        <label>Time (12h format):</label>
+        <input type="text" id="timeInput2" placeholder="e.g. 1:00 PM">
+    </div>
+    <div class="input-group">
+        <label>This time is in:</label>
+        <select id="fromZone">
+            <option value="toronto">Toronto</option>
+            <option value="egypt">Egypt (Cairo)</option>
+        </select>
+    </div>
+    <button onclick="convertTime()">Convert</button>
+    <div id="result2" class="result"></div>
+    <div class="note">January 2026 → Cairo is 7 hours ahead of Toronto</div>
+</section>
 
-    <!-- Tool 1 -->
-    <section>
-        <h2>1. Egyptian Time Adder</h2>
-        <p>Add minutes to Egyptian time (12-hour).</p>
-        <div class="input-group">
-            <label for="egyptTime12">Current Time (12-hour):</label>
-            <input type="text" id="egyptTime12" placeholder="e.g. 3:25 PM">
-        </div>
-        <div class="input-group">
-            <label for="addMinutes">Minutes to Add:</label>
-            <input type="number" id="addMinutes" placeholder="e.g. 90" min="0">
-        </div>
-        <button onclick="addMinutesToEgyptTime()">Calculate</button>
-        <div id="output1" class="result"></div>
-    </section>
+<!-- 3. Business Days -->
+<section>
+    <h2>3. Ontario Business Days Calculator</h2>
+    <div class="input-group">
+        <label>Start Date (M/D/Y):</label>
+        <input type="text" id="startDate" placeholder="e.g. 1/15/2026">
+    </div>
+    <button onclick="calcBusinessDays()">Calculate</button>
+    <div id="result3" class="result"></div>
+</section>
 
-    <!-- Tool 2 - FIXED -->
-    <section>
-        <h2>2. Egypt ↔ Toronto Converter</h2>
-        <p>Convert 12-hour time (works both ways now, 7-hour difference in winter).</p>
-        <div class="input-group">
-            <label for="inputTime12">Time (12-hour):</label>
-            <input type="text" id="inputTime12" placeholder="e.g. 1:00 PM">
-        </div>
-        <div class="input-group">
-            <label for="direction">From:</label>
-            <select id="direction">
-                <option value="egyptToToronto">Egypt → Toronto</option>
-                <option value="torontoToEgypt">Toronto → Egypt</option>
-            </select>
-        </div>
-        <button onclick="convertTimeTwoWay()">Convert</button>
-        <div id="output2" class="result"></div>
-        <div class="note">January = 7 hours difference (no DST in Toronto)</div>
-    </section>
+<!-- 4. Tax Calculator -->
+<section>
+    <h2>4. Canadian Sales Tax Calculator</h2>
+    <div class="input-group">
+        <label>Pre-tax amount (CAD):</label>
+        <input type="number" id="preTax" placeholder="e.g. 100" step="0.01" min="0">
+    </div>
+    <div class="input-group">
+        <label>Province:</label>
+        <select id="province">
+            <option value="AB">Alberta (5% GST)</option>
+            <option value="BC">BC (12%)</option>
+            <option value="MB">Manitoba (12%)</option>
+            <option value="ON">Ontario (13% HST)</option>
+            <option value="QC">Quebec (~14.975%)</option>
+        </select>
+    </div>
+    <button onclick="calcTax()">Calculate</button>
+    <div id="result4" class="result"></div>
+</section>
 
-    <!-- Tool 3 & 4 remain the same, just copy from previous if needed -->
+<script>
+// ────────────────────────────────────────────────
+// Tool 1 - Time Adder (simple local)
+function addMinutes() {
+    const input = document.getElementById('timeInput1').value.trim().toUpperCase();
+    const mins = parseInt(document.getElementById('minutesAdd').value) || 0;
+    const result = document.getElementById('result1');
 
-    <script>
-        // ... (keep Tool 1, 3, 4 scripts from before)
+    const match = input.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
+    if (!match) {
+        result.innerHTML = '<span class="error">Format: 1:00 PM or 11:45 AM</span>';
+        return;
+    }
 
-        // FIXED Tool 2
-        function convertTimeTwoWay() {
-            const timeStr = document.getElementById('inputTime12').value.trim();
-            const direction = document.getElementById('direction').value;
-            const output = document.getElementById('output2');
+    let h = parseInt(match[1]);
+    const m = parseInt(match[2]);
+    const period = match[3];
 
-            const parsed = parse12HourTime(timeStr);
-            if (!parsed) {
-                output.innerHTML = '<span class="error">Use format like 1:00 PM or 8:30 AM</span>';
-                return;
-            }
+    if (h === 12) h = 0;
+    if (period === 'PM') h += 12;
 
-            const now = new Date();
-            let baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parsed.hour, parsed.minute);
+    if (h > 23 || m > 59) {
+        result.innerHTML = '<span class="error">Invalid time</span>';
+        return;
+    }
 
-            // Get accurate offset for from/to zones on this date
-            const fromZone = direction === 'egyptToToronto' ? 'Africa/Cairo' : 'America/Toronto';
-            const toZone = direction === 'egyptToToronto' ? 'America/Toronto' : 'Africa/Cairo';
-            const label = direction === 'egyptToToronto' ? 'Toronto' : 'Egypt';
+    let totalMin = h * 60 + m + mins;
+    let newH = Math.floor(totalMin / 60) % 24;
+    let newM = totalMin % 60;
 
-            // Use Intl to get the correct local time string directly
-            const formatter = new Intl.DateTimeFormat('en-US', {
-                timeZone: toZone,
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            });
+    const newPeriod = newH >= 12 ? 'PM' : 'AM';
+    let displayH = newH % 12 || 12;
 
-            const parts = formatter.formatToParts(baseDate);
-            const hourPart = parts.find(p => p.type === 'hour').value;
-            const minutePart = parts.find(p => p.type === 'minute').value;
-            const dayPeriod = parts.find(p => p.type === 'dayPeriod').value;
+    result.textContent = `New time: ${displayH}:${newM.toString().padStart(2,'0')} ${newPeriod}`;
+}
 
-            const converted = `${hourPart}:${minutePart} ${dayPeriod}`;
+// ────────────────────────────────────────────────
+// Tool 2 - FIXED converter (hardcoded 7h winter offset)
+function convertTime() {
+    const input = document.getElementById('timeInput2').value.trim().toUpperCase();
+    const from = document.getElementById('fromZone').value;
+    const result = document.getElementById('result2');
 
-            output.textContent = `${label} time: ${converted}`;
-        }
+    const match = input.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
+    if (!match) {
+        result.innerHTML = '<span class="error">Format: 1:00 PM or 11:45 AM</span>';
+        return;
+    }
 
-        function parse12HourTime(str) {
-            const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-            if (!match) return null;
-            let hour = parseInt(match[1]);
-            const min = parseInt(match[2]);
-            const period = match[3].toUpperCase();
-            if (hour === 12) hour = 0;
-            if (period === 'PM') hour += 12;
-            if (hour > 23 || min > 59) return null;
-            return { hour, minute: min };
-        }
+    let h = parseInt(match[1]);
+    const m = parseInt(match[2]);
+    const period = match[3];
 
-        // Add your other functions here...
-    </script>
+    if (h === 12) h = 0;
+    if (period === 'PM') h += 12;
+
+    if (h > 23 || m > 59) {
+        result.innerHTML = '<span class="error">Invalid time</span>';
+        return;
+    }
+
+    let targetH = h;
+    if (from === 'toronto') {
+        targetH = (h + 7) % 24;          // Toronto → Egypt
+    } else {
+        targetH = (h - 7 + 24) % 24;     // Egypt → Toronto
+    }
+
+    const targetPeriod = targetH >= 12 ? 'PM' : 'AM';
+    let displayH = targetH % 12 || 12;
+
+    result.textContent = `In the other place: ${displayH}:${m.toString().padStart(2,'0')} ${targetPeriod}`;
+}
+
+// ────────────────────────────────────────────────
+// Tool 3 - Business days (basic version)
+function calcBusinessDays() {
+    const dateStr = document.getElementById('startDate').value.trim();
+    const result = document.getElementById('result3');
+
+    if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateStr)) {
+        result.innerHTML = '<span class="error">Use M/D/Y format</span>';
+        return;
+    }
+
+    const [month, day, year] = dateStr.split('/').map(Number);
+    let date = new Date(year, month-1, day);
+
+    const after3 = addBd(date, 3);
+    const after5 = addBd(date, 5);
+
+    result.textContent = 
+        `+3 business days: ${after3.getMonth()+1}/${after3.getDate()}/${after3.getFullYear()}\n` +
+        `+5 business days: ${after5.getMonth()+1}/${after5.getDate()}/${after5.getFullYear()}`;
+}
+
+function addBd(start, count) {
+    let d = new Date(start);
+    let added = 0;
+    while (added < count) {
+        d.setDate(d.getDate() + 1);
+        const day = d.getDay();
+        if (day !== 0 && day !== 6) added++;
+    }
+    return d;
+}
+
+// ────────────────────────────────────────────────
+// Tool 4 - Tax (simple version)
+function calcTax() {
+    const amt = parseFloat(document.getElementById('preTax').value) || 0;
+    const prov = document.getElementById('province').value;
+    const result = document.getElementById('result4');
+
+    if (amt <= 0) {
+        result.innerHTML = '<span class="error">Enter positive amount</span>';
+        return;
+    }
+
+    let taxRate = 0;
+    let note = '';
+
+    switch(prov) {
+        case 'AB': taxRate = 0.05; note = 'GST 5%'; break;
+        case 'BC': case 'MB': taxRate = 0.12; note = '12% total'; break;
+        case 'ON': taxRate = 0.13; note = 'HST 13%'; break;
+        case 'QC':
+            const gst = amt * 0.05;
+            const qst = (amt + gst) * 0.09975;
+            const totalTax = gst + qst;
+            result.textContent = 
+                `GST: $${gst.toFixed(2)}\n` +
+                `QST: $${qst.toFixed(2)}\n` +
+                `Total tax: $${totalTax.toFixed(2)}\n` +
+                `Grand total: $${(amt + totalTax).toFixed(2)}`;
+            return;
+    }
+
+    const tax = amt * taxRate;
+    result.textContent = 
+        `${note}\n` +
+        `Tax: $${tax.toFixed(2)}\n` +
+        `Total: $${(amt + tax).toFixed(2)}`;
+}
+</script>
 </body>
 </html>
